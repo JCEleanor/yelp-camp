@@ -18,7 +18,9 @@ const reviews = require('./routes/reviews')
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
 	useNewUrlParser: true,
 	useCreateIndex: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+	//to prevent warning message: DeprecationWarning: Mongoose: `findOneAndUpdate()` and `findOneAndDelete()` without the `useFindAndModify` option set to false are deprecated.
+	useFindAndModify: false
 })
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
@@ -42,6 +44,8 @@ app.use(methodOverride('_method'))
 app.use('/campgrounds', campgrounds)
 //require review routes
 app.use('/campgrounds/:id/reviews', reviews)
+//serve static assets
+app.use(express.static(path.join(__dirname, 'public')))
 
 //ejs-mate
 app.engine('ejs', ejsMate)
