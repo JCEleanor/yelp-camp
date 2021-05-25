@@ -3,6 +3,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const ejsMate = require('ejs-mate')
 const session = require('express-session')
+const flash = require('connect-flash')
 
 //expression async error handling function
 const catchAsync = require('./utilities/catchAsync')
@@ -55,7 +56,14 @@ const sessionConfig = {
 }
 //this MUST come BEFORE campgrounds/reviews routes
 app.use(session(sessionConfig))
-
+//add flash messages
+app.use(flash())
+//sending flash messages, must put before route handlers
+app.use((req, res, next) => {
+	res.locals.success = req.flash('success')
+	res.locals.error = req.flash('error')
+	next()
+})
 //require campground routes
 app.use('/campgrounds', campgrounds)
 //require review routes
