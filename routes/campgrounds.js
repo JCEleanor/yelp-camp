@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+
 //import joi from schemas.js
 const { campgroundSchema, reviewSchema } = require('../schemas')
 
