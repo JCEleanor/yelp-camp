@@ -2,8 +2,7 @@ const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
 const ejsMate = require('ejs-mate')
-//import joi from schemas.js
-const { campgroundSchema, reviewSchema } = require('./schemas')
+
 //expression async error handling function
 const catchAsync = require('./utilities/catchAsync')
 const ExpressError = require('./utilities/ExpressError')
@@ -14,6 +13,7 @@ const Campground = require('./models/campground')
 const Review = require('./models/reviews')
 //require routes
 const campgrounds = require('./routes/campgrounds')
+const reviews = require('./routes/reviews')
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
 	useNewUrlParser: true,
@@ -38,8 +38,10 @@ app.use(express.urlencoded({ extended: true }))
 //method-override
 app.use(methodOverride('_method'))
 
-//
+//require campground routes
 app.use('/campgrounds', campgrounds)
+//require review routes
+app.use('/campgrounds/:id/reviews', reviews)
 
 //ejs-mate
 app.engine('ejs', ejsMate)
