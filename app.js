@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
 const ejsMate = require('ejs-mate')
+const session = require('express-session')
 
 //expression async error handling function
 const catchAsync = require('./utilities/catchAsync')
@@ -39,6 +40,21 @@ app.use(express.urlencoded({ extended: true }))
 
 //method-override
 app.use(methodOverride('_method'))
+
+//config session
+const sessionConfig = {
+	secret: 'thisisasecret',
+	resave: false,
+	saveUninitialized: true,
+	cookie: {
+		//extra security, to prevent cross-site scripting flaws, by default it's true
+		httpOnly: true,
+		expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //expires after 7 days
+		maxAge: 1000 * 60 * 60 * 24 * 7
+	}
+}
+//this MUST come BEFORE campgrounds/reviews routes
+app.use(session(sessionConfig))
 
 //require campground routes
 app.use('/campgrounds', campgrounds)
