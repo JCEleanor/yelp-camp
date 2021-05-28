@@ -4,6 +4,9 @@ const router = express.Router()
 //import joi from schemas.js
 const { campgroundSchema } = require('../schemas')
 
+//middleware that checks if users are loggin 
+const {isLoggedIn} = require('../middleware')
+
 const ExpressError = require('../utilities/ExpressError')
 
 //require the models
@@ -33,13 +36,13 @@ router.get(
 )
 
 //make new campground page
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
 	res.render('campgrounds/new')
 })
 
 //add new campground
 router.post(
-	'/',
+	'/', isLoggedIn, 
 	validateCampground,
 	catchAsync(async (req, res) => {
 		const campground = new Campground(req.body.campground)
@@ -64,7 +67,7 @@ router.get(
 
 //edit campground page
 router.get(
-	'/:id/edit',
+	'/:id/edit', isLoggedIn,
 	catchAsync(async (req, res) => {
 		const campground = await Campground.findById(req.params.id)
 		if (!campground) {
@@ -77,7 +80,7 @@ router.get(
 
 //update campground
 router.put(
-	'/:id',
+	'/:id', isLoggedIn,
 	validateCampground,
 	catchAsync(async (req, res) => {
 		const { id } = req.params
@@ -90,7 +93,7 @@ router.put(
 
 //delete campground
 router.delete(
-	'/:id',
+	'/:id', isLoggedIn,
 	catchAsync(async (req, res) => {
 		const { id } = req.params
 		await Campground.findByIdAndDelete(id)
