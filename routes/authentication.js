@@ -1,4 +1,5 @@
 const express = require('express')
+const passport = require('passport')
 const { Error } = require('mongoose')
 const router = express.Router()
 const User = require('../models/user')
@@ -20,7 +21,15 @@ router.post('/register', catchAsync(async(req, res) => {
         console.log(err);
         res.redirect('/register')
     }
-
 }))
+
+router.get('/login', (req, res) => {
+    res.render('authentication/login')
+})
+
+router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect:'/login' }), (req, res) => {
+    req.flash('success', 'Welcome back')
+    res.redirect('/campgrounds')
+})
 
 module.exports = router
