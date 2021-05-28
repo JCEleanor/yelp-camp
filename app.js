@@ -4,18 +4,21 @@ const mongoose = require('mongoose')
 const ejsMate = require('ejs-mate')
 const session = require('express-session')
 const flash = require('connect-flash')
-
-//expression async error handling function
-const catchAsync = require('./utilities/catchAsync')
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+//express async error handling function
 const ExpressError = require('./utilities/ExpressError')
 //override method
 const methodOverride = require('method-override')
 //require the models
 const Campground = require('./models/campground')
 const Review = require('./models/reviews')
+const User = require('./models/user')
+
 //require routes
-const campgrounds = require('./routes/campgrounds')
-const reviews = require('./routes/reviews')
+const campgroundsRoutes = require('./routes/campgrounds')
+const reviewsRoutes = require('./routes/reviews')
+const authenticationRoutes = require('./routes/authentication')
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
 	useNewUrlParser: true,
@@ -35,6 +38,8 @@ const app = express()
 //set ejs view engine
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+//ejs-mate
+app.engine('ejs', ejsMate)
 
 //to parse the req.body
 app.use(express.urlencoded({ extended: true }))
@@ -58,21 +63,36 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 //add flash messages
 app.use(flash())
+
+//for passport.js
+app.use(passport.initialize())
+//to get persistent login status. MUST be AFTER session
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+//the way data is stored/unstored in the session
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
 //sending flash messages, must put before route handlers
 app.use((req, res, next) => {
 	res.locals.success = req.flash('success')
 	res.locals.error = req.flash('error')
 	next()
 })
-//require campground routes
-app.use('/campgrounds', campgrounds)
-//require review routes
-app.use('/campgrounds/:id/reviews', reviews)
+
+//use routes
+app.use('/campgrounds', campgroundsRoutes)
+app.use('/campgrounds/:id/reviews', reviewsRoutes)
+app.use('/', authenticationRoutes)
+
 //serve static assets
 app.use(express.static(path.join(__dirname, 'public')))
 
-//ejs-mate
-app.engine('ejs', ejsMate)
+app.get('/fakeUser', async (req, res) => {
+	const user = new User({ email: 'haha@gmail.com', username: 'Emy' })
+	const newUser = await User.register(user, '123')
+	res.send(newUser)
+})
 
 //homepage
 app.get('/', (req, res) => {
@@ -89,14 +109,7 @@ app.use((err, req, res, next) => {
 	const { statusCode = 500 } = err
 	if (!err.message) err.message = 'oh no something went wrong'
 	res.status(statusCode).render('error', { err })
-	// console.log(err);
 })
-
-// app.get('/makecampground', async(req, res) => {
-//     const camp = new Campground({title: 'My Backyard', description: 'cheap camping'});
-//     await camp.save();
-//     res.send(camp)
-// })
 
 app.listen(3000, () => {
 	console.log('ON PORT 3000')
