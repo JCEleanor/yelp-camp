@@ -75,6 +75,9 @@ passport.deserializeUser(User.deserializeUser())
 
 //sending flash messages, must put before route handlers
 app.use((req, res, next) => {
+	//to check which user 
+	res.locals.currentUser = req.user
+	
 	res.locals.success = req.flash('success')
 	res.locals.error = req.flash('error')
 	next()

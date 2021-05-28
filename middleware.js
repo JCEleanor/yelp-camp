@@ -6,3 +6,10 @@ module.exports.isLoggedIn = (req, res, next) => {
     }
     next()
 }
+
+// req.user:   {
+//     _id: 60b0edfcae669454b75f0d8d,
+//     email: 'crcky4826@gmail.com',
+//     username: 'eleanor',
+//     __v: 0
+//   }
