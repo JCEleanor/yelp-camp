@@ -13,9 +13,8 @@
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-muted">
-                        <%= campground.location%>
-                    </li>
+                    <li class="list-group-item text-muted"><%= campground.location%></li>
+                    <li class="list-group-item text-muted">Posted by <span class="text-dark"><%= campground.author.username%></span></li>
                     <li class="list-group-item">$<%= campground.price%>/night</li>
                 </ul>
                 <div class="card-body">
