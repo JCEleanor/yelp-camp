@@ -6,10 +6,6 @@ const reviews = require('../controllers/reviews')
 //error handling
 const catchAsync = require('../utilities/catchAsync')
 
-//require the models
-const Campground = require('../models/campground')
-const Review = require('../models/reviews')
-
 const { validateReview, isLoggedIn, isReviewAuthor } = require('../middleware')
 
 //add review

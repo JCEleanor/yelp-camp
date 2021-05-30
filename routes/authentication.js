@@ -1,8 +1,6 @@
 const express = require('express')
 const passport = require('passport')
-const { Error } = require('mongoose')
 const router = express.Router()
-const User = require('../models/user')
 const catchAsync = require('../utilities/catchAsync')
 const users = require('../controllers/authentication')
 
