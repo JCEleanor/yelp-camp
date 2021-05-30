@@ -7,8 +7,6 @@ const { isLoggedIn, validateCampground, isAuthor } = require('../middleware')
 //require controllers
 const campgrounds = require('../controllers/campgrounds')
 
-//require the models
-const Campground = require('../models/campground')
 //expression async error handling function
 const catchAsync = require('../utilities/catchAsync')
 
