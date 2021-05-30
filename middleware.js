@@ -25,8 +25,8 @@ module.exports.validateCampground = (req, res, next) => {
 	}
 }
 
-//authorization middleware for campground author
-module.exports.isReviewAuthor = async (req, res, next) => {
+//authorization middleware for review author
+module.exports.isAuthor = async (req, res, next) => {
 	const { id } = req.params
 	const campground = await Campground.findById(id)
 	if (!campground.author.equals(req.user._id)) {
@@ -37,7 +37,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 }
 
 //authorization middleware for review author
-module.exports.isAuthor = async (req, res, next) => {
+module.exports.isReviewAuthor = async (req, res, next) => {
 	const { id, reviewId } = req.params
 	const review = await Review.findById(reviewId)
 	if (!review.author.equals(req.user._id)) {
