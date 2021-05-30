@@ -10,9 +10,7 @@ const LocalStrategy = require('passport-local')
 const ExpressError = require('./utilities/ExpressError')
 //override method
 const methodOverride = require('method-override')
-//require the models
-const Campground = require('./models/campground')
-const Review = require('./models/reviews')
+
 const User = require('./models/user')
 
 //require routes

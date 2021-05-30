@@ -3,24 +3,12 @@ const express = require('express')
 const router = express.Router({ mergeParams: true })
 //error handling
 const catchAsync = require('../utilities/catchAsync')
-const ExpressError = require('../utilities/ExpressError')
-//import joi from schemas.js
-const { reviewSchema } = require('../schemas')
 
 //require the models
 const Campground = require('../models/campground')
 const Review = require('../models/reviews')
 
-//review validation middleware
-const validateReview = (req, res, next) => {
-	const { error } = reviewSchema.validate(req.body)
-	if (error) {
-		const strErrorMsg = error.details.map((el) => el.message).join(',')
-		throw new ExpressError(strErrorMsg, 400)
-	} else {
-		next()
-	}
-}
+const {validateReview} = require('../middleware')
 
 //add review
 router.post(
