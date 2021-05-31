@@ -10,25 +10,19 @@ const campgrounds = require('../controllers/campgrounds')
 //expression async error handling function
 const catchAsync = require('../utilities/catchAsync')
 
-//all campgrounds
-router.get('/', catchAsync(campgrounds.index))
+router
+	.route('/')
+	.get(catchAsync(campgrounds.index))
+	.post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
 
-//make new campground page
 router.get('/new', isLoggedIn, campgrounds.renderNewForm)
 
-//add new campground
-router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+router
+	.route('/:id')
+	.get(catchAsync(campgrounds.showCampground))
+	.put(validateCampground, isAuthor, catchAsync(campgrounds.updateCampgorund))
+	.delete(isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCampground))
 
-//show campground details
-router.get('/:id', catchAsync(campgrounds.showCampground))
-
-//edit campground page
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgrounds.renderEditForm))
-
-//update campground
-router.put('/:id', validateCampground, isAuthor, catchAsync(campgrounds.updateCampgorund))
-
-//delete campground
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCampground))
 
 module.exports = router
