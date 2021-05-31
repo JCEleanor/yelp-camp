@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config()
+}
+
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
@@ -74,8 +78,8 @@ passport.deserializeUser(User.deserializeUser())
 //sending flash messages, must put before route handlers
 app.use((req, res, next) => {
 	// console.log(req.session);
-	
-	//to check which user 
+
+	//to check which user
 	res.locals.currentUser = req.user
 
 	res.locals.success = req.flash('success')
