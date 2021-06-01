@@ -1,11 +1,16 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Review = require('./reviews');
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const Review = require('./reviews')
 
 const CampgroundSchema = new Schema({
 	title: String,
 	price: Number,
-	image: String,
+	images: [
+		{
+			url: String, //req.file.path
+			filename: String //req.file.filename
+		}
+	],
 	description: String,
 	location: String,
 	author: {
@@ -18,7 +23,7 @@ const CampgroundSchema = new Schema({
 			ref: 'Review'
 		}
 	]
-});
+})
 
 //the middleware that's gonna be triggered when we hit the 'findByIdAndUpdate' route
 CampgroundSchema.post('findOneAndDelete', async function(doc) {
@@ -27,8 +32,8 @@ CampgroundSchema.post('findOneAndDelete', async function(doc) {
 			_id: {
 				$in: doc.reviews
 			}
-		});
+		})
 	}
-});
+})
 
-module.exports = mongoose.model('Campground', CampgroundSchema);
+module.exports = mongoose.model('Campground', CampgroundSchema)
