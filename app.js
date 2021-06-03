@@ -14,6 +14,7 @@ const LocalStrategy = require('passport-local')
 const ExpressError = require('./utilities/ExpressError')
 //override method
 const methodOverride = require('method-override')
+const mongoSanitize = require('express-mongo-sanitize')
 
 const User = require('./models/user')
 
@@ -48,6 +49,13 @@ app.use(express.urlencoded({ extended: true }))
 
 //method-override
 app.use(methodOverride('_method'))
+
+//prevent mongo injection
+app.use(
+	mongoSanitize({
+		replaceWith: '_'
+	})
+)
 
 //config session
 const sessionConfig = {
