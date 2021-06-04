@@ -59,6 +59,7 @@ app.use(
 
 //config session
 const sessionConfig = {
+	name: 'yelpcampSession',
 	secret: 'thisisasecret',
 	resave: false,
 	saveUninitialized: true,
