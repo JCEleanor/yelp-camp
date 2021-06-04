@@ -15,5 +15,5 @@ map.addControl(new mapboxgl.NavigationControl())
 // new mapboxgl.marker().setLngLat([-74.5, 40]).addTo(map)
 const marker1 = new mapboxgl.Marker()
 	.setLngLat(campground.geometry.coordinates)
-	.setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<h3>${campground.title}</h2><p>${campground.location}</p>`))
+	.setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<h3>${campground.title}</h2><p>${campground.location}</p>`)) //HTML sanitization needed
 	.addTo(map)
