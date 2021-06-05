@@ -16,6 +16,7 @@ const ExpressError = require('./utilities/ExpressError')
 //override method
 const methodOverride = require('method-override')
 const mongoSanitize = require('express-mongo-sanitize')
+const helmet = require('helmet')
 
 const User = require('./models/user')
 
@@ -23,8 +24,12 @@ const User = require('./models/user')
 const campgroundsRoutes = require('./routes/campgrounds')
 const reviewsRoutes = require('./routes/reviews')
 const authenticationRoutes = require('./routes/authentication')
+//
+//url to connect to mongodb atlas
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp'
+// 'mongodb://localhost:27017/yelp-camp'
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+mongoose.connect(dbUrl, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useUnifiedTopology: true,
@@ -97,6 +102,7 @@ app.use((req, res, next) => {
 	next()
 })
 
+app.use(helmet({ contentSecurityPolicy: false }))
 //use routes
 app.use('/campgrounds', campgroundsRoutes)
 app.use('/campgrounds/:id/reviews', reviewsRoutes)
