@@ -27,7 +27,7 @@ const reviewsRoutes = require('./routes/reviews')
 const authenticationRoutes = require('./routes/authentication')
 
 //url to connect to mongodb atlas
-const dbUrl = 'mongodb://localhost:27017/yelp-camp' || process.env.DB_URL
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp'
 
 mongoose.connect(dbUrl, {
 	useNewUrlParser: true,
@@ -64,9 +64,10 @@ app.use(
 	})
 )
 
+const secret = process.env.SECRET || 'thisisasecret'
 const mongoStoreConfig = {
 	mongoUrl: dbUrl,
-	secret: 'thisisasecret',
+	secret,
 	touchAfter: 24 * 3600
 }
 
@@ -74,7 +75,7 @@ const mongoStoreConfig = {
 const sessionConfig = {
 	store: MongoStore.create(mongoStoreConfig),
 	name: 'yelpcampSession',
-	secret: 'thisisasecret',
+	secret,
 	resave: false,
 	saveUninitialized: true,
 	cookie: {
