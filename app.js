@@ -8,6 +8,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const ejsMate = require('ejs-mate')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')
 const flash = require('connect-flash')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
@@ -24,10 +25,9 @@ const User = require('./models/user')
 const campgroundsRoutes = require('./routes/campgrounds')
 const reviewsRoutes = require('./routes/reviews')
 const authenticationRoutes = require('./routes/authentication')
-//
+
 //url to connect to mongodb atlas
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp'
-// 'mongodb://localhost:27017/yelp-camp'
+const dbUrl = 'mongodb://localhost:27017/yelp-camp' || process.env.DB_URL
 
 mongoose.connect(dbUrl, {
 	useNewUrlParser: true,
@@ -37,6 +37,7 @@ mongoose.connect(dbUrl, {
 	useFindAndModify: false
 })
 const db = mongoose.connection
+//DeprecationWarning: Listening to events on the Db class has been deprecated and will be removed in the next major version.
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {
 	console.log('Database connected')
@@ -63,8 +64,15 @@ app.use(
 	})
 )
 
+const mongoStoreConfig = {
+	mongoUrl: dbUrl,
+	secret: 'thisisasecret',
+	touchAfter: 24 * 3600
+}
+
 //config session
 const sessionConfig = {
+	store: MongoStore.create(mongoStoreConfig),
 	name: 'yelpcampSession',
 	secret: 'thisisasecret',
 	resave: false,
