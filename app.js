@@ -1,6 +1,6 @@
-// if (process.env.NODE_ENV !== 'production') {
-// 	require('dotenv').config()
-// }
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config()
+}
 require('dotenv').config()
 // dont display the error stack outside of development
 const express = require('express')
