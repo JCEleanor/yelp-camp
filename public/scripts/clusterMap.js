@@ -29,7 +29,7 @@ map.on('load', function() {
 			//   * Yellow, 30px circles when point count is between 100 and 750
 			//   * Pink, 40px circles when point count is greater than or equal to 750
 			'circle-color': [ 'step', [ 'get', 'point_count' ], '#51bbd6', 100, '#f1f075', 750, '#f28cb1' ],
-			'circle-radius': [ 'step', [ 'get', 'point_count' ], 10, 10, 15, 20, 30 ]
+			'circle-radius': [ 'step', [ 'get', 'point_count' ], 20, 15, 15, 20, 30 ]
 		}
 	})
 
