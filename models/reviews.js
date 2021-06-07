@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const revewSchema = new Schema({
 	body: String,
@@ -8,6 +8,6 @@ const revewSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	}
-});
+})
 
-module.exports = mongoose.model('Review', revewSchema);
+module.exports = mongoose.model('Review', revewSchema)

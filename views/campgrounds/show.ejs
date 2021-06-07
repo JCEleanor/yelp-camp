@@ -90,7 +90,13 @@
                     <% for(let review of campground.reviews) { %>
                         <div class="card mb-3 ">
                             <div class="card-body">                                
-                                <h6 class="card-subtitle mb-2 text-muted">By <%= review.author.username %></h6>
+                                <h6 class="card-subtitle mb-2">By <%= review.author.username%></h6>
+                                <small class="text-muted">
+                                    <% const year =  review._id.getTimestamp().getFullYear() || "2021"%> 
+                                    <% const month =  review._id.getTimestamp().getMonth() + 1 || "12"%> 
+                                    <% const date =  review._id.getTimestamp().getDate() || "24"%> 
+                                    <%- year+ "-" + month + "-" + date %>  
+                                </small>                                
                                 <p class="starability-result" data-rating="<%= review.rating %>">
                                     Rated: <%= review.rating %> stars
                                   </p>

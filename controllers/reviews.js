@@ -5,6 +5,7 @@ module.exports.createReview = async (req, res) => {
 	//if mergeParams is not set (false), req.params would be an empty object
 	// console.log(req.params)
 	const campground = await Campground.findById(req.params.id)
+	//db.products.find().forEach(function (doc){ d = doc._id.getTimestamp(); print(d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() ) })
 	const review = new Review(req.body.review)
 	review.author = req.user._id
 	campground.reviews.push(review)
