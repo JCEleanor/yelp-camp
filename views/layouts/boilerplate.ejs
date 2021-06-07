@@ -15,8 +15,10 @@
 
 <body class="d-flex flex-column vh-100">
     <%- include('../partials/navbar') %>
-        <main class="container mt-5">
-            <%- include('../partials/flash') %>
+        <main class="mt-5">
+            <div class="container w-25">
+                <%- include('../partials/flash') %>
+            </div>
                 <%- body %>
         </main>
         <%- include('../partials/footer') %>
