@@ -128,7 +128,7 @@ app.get('/fakeUser', async (req, res) => {
 
 //homepage
 app.get('/', (req, res) => {
-	res.render('home')
+	res.render('landingPage')
 })
 
 //for every single request, if it doesn't hit the routes above, it'd hit this route, so the order is IMPORTANT
