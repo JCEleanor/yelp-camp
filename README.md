@@ -1,7 +1,6 @@
 # Yelp Camp
 ## Overview
-Yelp Camp is the final project from Colt Steele's [The Web Developer Bootcamp 2021](https://www.udemy.com/course/the-web-developer-bootcamp/)
-A full stack web application mimicking Yelp which allows users to post campground experience and leave reviews.
+Yelp Camp is the final project from Colt Steele's [The Web Developer Bootcamp 2021](https://www.udemy.com/course/the-web-developer-bootcamp/), a full stack web application mimicking Yelp which allows users to post campground experience and leave reviews.
 #### To see the app in action: https://murmuring-shore-53218.herokuapp.com/
 
 ## Features
