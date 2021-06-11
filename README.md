@@ -1,18 +1,18 @@
 # Yelp Camp
 ## Overview
-Yelp Camp is the final project from Colt Steele's [The Web Developer Bootcamp 2021](https://www.udemy.com/course/the-web-developer-bootcamp/), a full stack web application mimicking Yelp which allows users to post campground experience and leave reviews.
-#### To see the app in action: https://murmuring-shore-53218.herokuapp.com/
+Yelp Camp is a full stack web application mimicking Yelp, and also the final project from Colt Steele's [The Web Developer Bootcamp 2021](https://www.udemy.com/course/the-web-developer-bootcamp/). Yelp camp is a crowdsourcing platform that allows user to post their own campgrounds or leave reviews. 
+### To see the app in action: https://murmuring-shore-53218.herokuapp.com/
 
 ## Features
 -  Landing page
 ![landing page](demo/landing-page.png)
 - Index page incorporated with cluster map (using mapbox)
 ![index page](demo/index-page.png)
-- Campground detail page to show campground and reviews
+- Campground detail page to show each campground and its reviews
 ![detail page](demo/detail-page.png)
-- Logged in users can post new campground
+- Logged in users can post new campgrounds
 ![create page](demo/create-form.png)
-- Campground owner can update/delete the content
+- Campground owners can update/delete the content
 ![edit page](demo/edit-page.png)
 
 ## Packages
